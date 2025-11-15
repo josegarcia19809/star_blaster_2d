@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float leftBoundPadding = 10f;
+    [SerializeField] float rightBoundPadding = 10f;
+    [SerializeField] float bottomBoundPadding = 10f;
+    [SerializeField] float upBoundPadding = 10f;
 
     InputAction moveAction;
     Vector3 moveVector;
@@ -38,8 +42,8 @@ public class PlayerController : MonoBehaviour
         moveVector = moveAction.ReadValue<Vector2>();
 
         Vector3 newPos = transform.position + moveVector * (moveSpeed * Time.deltaTime);
-        newPos.x = Mathf.Clamp(newPos.x, minBounds.x, maxBounds.x);
-        newPos.y = Mathf.Clamp(newPos.y, minBounds.y, maxBounds.y);
+        newPos.x = Mathf.Clamp(newPos.x, minBounds.x + leftBoundPadding, maxBounds.x - rightBoundPadding);
+        newPos.y = Mathf.Clamp(newPos.y, minBounds.y+ bottomBoundPadding, maxBounds.y- upBoundPadding);
         transform.position = newPos;
     }
 }
