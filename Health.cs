@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] bool isPlayer;
+    [SerializeField] int scoreValue = 50;
     [SerializeField] private int health = 50;
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private bool applyCameraShake;
     CameraShake cameraShake;
     AudioManager audioManager;
+    ScoreKeeper scoreKeeper;
 
 
     private void Start()
     {
         if (Camera.main != null) cameraShake = Camera.main.GetComponent<CameraShake>();
         audioManager = FindFirstObjectByType<AudioManager>();
+        scoreKeeper = FindFirstObjectByType<ScoreKeeper>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -39,8 +43,18 @@ public class Health : MonoBehaviour
         health -= damage;
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        if (!isPlayer)
+        {
+            scoreKeeper.ModifyScore(scoreValue);
+        }
+
+        Destroy(gameObject);
     }
 
     void PlayHitParticles()
