@@ -7,11 +7,13 @@ public class Health : MonoBehaviour
     [SerializeField] private ParticleSystem hitParticles;
     [SerializeField] private bool applyCameraShake;
     CameraShake cameraShake;
+    AudioManager audioManager;
 
 
     private void Start()
     {
         if (Camera.main != null) cameraShake = Camera.main.GetComponent<CameraShake>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,6 +26,7 @@ public class Health : MonoBehaviour
             TakeDamage(damageDealer.GetDamage());
             PlayHitParticles();
             damageDealer.Hit();
+            audioManager.PlayDamageSFX();
             if (applyCameraShake && Camera.main != null)
             {
                 cameraShake.Play();
