@@ -65,4 +65,9 @@ public class Health : MonoBehaviour
             Destroy(particles, particles.main.duration + particles.main.startLifetime.constantMax);
         }
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
 }

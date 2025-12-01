@@ -5,15 +5,15 @@ using Random = UnityEngine.Random;
 
 public class Shooter : MonoBehaviour
 {
-    [Header("Base Variables")] [SerializeField]
-    GameObject projectilePrefab;
+    [Header("Base Variables")]
+    [SerializeField] GameObject projectilePrefab;
 
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileLifetime = 5f;
     [SerializeField] float baseFireRate = 0.2f;
 
-    [Header("AI Variables")] [SerializeField]
-    private bool useAI;
+    [Header("AI Variables")]
+    [SerializeField] private bool useAI;
 
     [SerializeField] float minimumFireRate = 0.2f;
     [SerializeField] float fireRateVariance = 0.0f;
@@ -67,7 +67,7 @@ public class Shooter : MonoBehaviour
                 Random.Range(baseFireRate - fireRateVariance, baseFireRate + fireRateVariance);
 
             waitTime = Mathf.Clamp(waitTime, minimumFireRate, float.MaxValue);
-            
+
             audioManager.PlayShootingSFX();
             yield return new WaitForSeconds(waitTime);
         }
