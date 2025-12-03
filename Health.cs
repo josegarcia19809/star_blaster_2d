@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     private void Start()
     {
         if (Camera.main != null) cameraShake = Camera.main.GetComponent<CameraShake>();
-        audioManager = FindFirstObjectByType<AudioManager>();
+        audioManager = AudioManager.GetInstance();
         scoreKeeper = FindFirstObjectByType<ScoreKeeper>();
         levelManager = FindFirstObjectByType<LevelManager>();
     }
@@ -32,7 +32,8 @@ public class Health : MonoBehaviour
             TakeDamage(damageDealer.GetDamage());
             PlayHitParticles();
             damageDealer.Hit();
-            audioManager.PlayDamageSFX();
+            // audioManager.PlayDamageSFX();
+            AudioManager.GetInstance().PlayDamageSFX();
             if (applyCameraShake && Camera.main != null)
             {
                 cameraShake.Play();

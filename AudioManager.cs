@@ -13,6 +13,13 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] [Range(0, 1)] private float damageVolume = 1f;
 
+    static AudioManager instance;
+
+    public static AudioManager GetInstance()
+    {
+        return instance;
+    }
+
     private void Awake()
     {
         ManageSingleton();
@@ -25,14 +32,16 @@ public class AudioManager : MonoBehaviour
 
     void ManageSingleton()
     {
-        int instanceCount = FindObjectsByType<AudioManager>(FindObjectsSortMode.None).Length;
-        if (instanceCount > 1)
+        // int instanceCount = FindObjectsByType<AudioManager>(FindObjectsSortMode.None).Length;
+        // if (instanceCount > 1)
+        if (instance != null)
         {
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
         else
         {
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
