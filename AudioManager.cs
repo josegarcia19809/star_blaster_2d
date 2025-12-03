@@ -1,20 +1,40 @@
+using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("Shooting SFX")] [SerializeField]
-    private AudioClip shootingClip;
+    [Header("Shooting SFX")]
+    [SerializeField] private AudioClip shootingClip;
 
     [SerializeField] [Range(0, 1)] private float shootingVolume = 1f;
 
-    [Header("Damage SFX")] [SerializeField]
-    private AudioClip damageClip;
+    [Header("Damage SFX")]
+    [SerializeField] private AudioClip damageClip;
 
     [SerializeField] [Range(0, 1)] private float damageVolume = 1f;
+
+    private void Awake()
+    {
+        ManageSingleton();
+    }
 
     public void PlayShootingSFX()
     {
         PlayAudioClip(shootingClip, shootingVolume);
+    }
+
+    void ManageSingleton()
+    {
+        int instanceCount = FindObjectsByType<AudioManager>(FindObjectsSortMode.None).Length;
+        if (instanceCount > 1)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void PlayDamageSFX()
