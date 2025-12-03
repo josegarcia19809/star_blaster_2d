@@ -6,7 +6,8 @@ public class LevelManager : MonoBehaviour
 {
     public void LoadGame()
     {
-        StartCoroutine(WaitAndLoadScene("GameScene", .02f));
+        SceneManager.LoadScene("GameScene");
+        ScoreKeeper.GetInstance().ResetScore();
     }
 
     public void LoadGameOver()
